@@ -535,6 +535,8 @@ export class DifyService {
     settings: DifySetting,
     session: IntegrationSession,
     content: string,
+    fromMe: boolean,
+    msgId: string,
     pushName?: string,
   ) {
     const data = await this.createNewSession(instance, {
@@ -547,7 +549,7 @@ export class DifyService {
       session = data.session;
     }
 
-    await this.sendMessageToBot(instance, session, settings, dify, remoteJid, pushName, content);
+    await this.sendMessageToBot(instance, session, settings, dify, remoteJid, pushName, content, fromMe, msgId);
 
     return;
   }
@@ -595,13 +597,13 @@ export class DifyService {
           });
         }
 
-        await this.initNewSession(instance, remoteJid, dify, settings, session, content, pushName);
+        await this.initNewSession(instance, remoteJid, dify, settings, session, content, fromMe, msgId, pushName);
         return;
       }
     }
 
     if (!session) {
-      await this.initNewSession(instance, remoteJid, dify, settings, session, content, pushName);
+      await this.initNewSession(instance, remoteJid, dify, settings, session, content, fromMe, msgId, pushName);
       return;
     }
 

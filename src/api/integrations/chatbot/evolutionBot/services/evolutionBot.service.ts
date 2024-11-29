@@ -302,6 +302,8 @@ export class EvolutionBotService {
     settings: EvolutionBotSetting,
     session: IntegrationSession,
     content: string,
+    fromMe: boolean,
+    msgId: string,
     pushName?: string,
   ) {
     const data = await this.createNewSession(instance, {
@@ -314,7 +316,7 @@ export class EvolutionBotService {
       session = data.session;
     }
 
-    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content);
+    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId);
 
     if (!message) return;
 
@@ -366,13 +368,13 @@ export class EvolutionBotService {
           });
         }
 
-        await this.initNewSession(instance, remoteJid, bot, settings, session, content, pushName);
+        await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName);
         return;
       }
     }
 
     if (!session) {
-      await this.initNewSession(instance, remoteJid, bot, settings, session, content, pushName);
+      await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName);
       return;
     }
 
