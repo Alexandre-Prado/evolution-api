@@ -829,6 +829,8 @@ export class EvolutionBotController extends ChatbotController implements Chatbot
               timePerChar,
             },
             debouncedContent,
+            key.fromMe,
+            key.id,
             msg?.pushName,
           );
         });
@@ -853,6 +855,8 @@ export class EvolutionBotController extends ChatbotController implements Chatbot
             timePerChar,
           },
           content,
+          key.fromMe,
+          key.id,
           msg?.pushName,
         );
       }

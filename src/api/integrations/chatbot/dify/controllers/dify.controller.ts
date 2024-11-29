@@ -857,6 +857,8 @@ export class DifyController extends ChatbotController implements ChatbotControll
               timePerChar,
             },
             debouncedContent,
+            key.fromMe,
+            key.id,
             msg?.pushName,
           );
         });
@@ -881,6 +883,8 @@ export class DifyController extends ChatbotController implements ChatbotControll
             timePerChar,
           },
           content,
+          key.fromMe,
+          key.id,
           msg?.pushName,
         );
       }

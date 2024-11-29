@@ -62,6 +62,8 @@ export class DifyService {
     remoteJid: string,
     pushName: string,
     content: string,
+    fromMe: boolean,
+    msgId: string,
   ) {
     try {
       let endpoint: string = dify.apiUrl;
@@ -73,6 +75,8 @@ export class DifyService {
             remoteJid: remoteJid,
             pushName: pushName,
             instanceName: instance.instanceName,
+            fromMe: fromMe,
+            msgId: msgId,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
             apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
           },
@@ -134,6 +138,8 @@ export class DifyService {
             pushName: pushName,
             remoteJid: remoteJid,
             instanceName: instance.instanceName,
+            fromMe: fromMe,
+            msgId: msgId,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
             apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
           },
@@ -193,6 +199,8 @@ export class DifyService {
             remoteJid: remoteJid,
             pushName: pushName,
             instanceName: instance.instanceName,
+            fromMe: fromMe,
+            msgId: msgId,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
             apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
           },
@@ -294,6 +302,8 @@ export class DifyService {
             remoteJid: remoteJid,
             pushName: pushName,
             instanceName: instance.instanceName,
+            fromMe: fromMe,
+            msgId: msgId,
             serverUrl: this.configService.get<HttpServer>('SERVER').URL,
             apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
           },
@@ -549,6 +559,8 @@ export class DifyService {
     session: IntegrationSession,
     settings: DifySetting,
     content: string,
+    fromMe: boolean,
+    msgId: string,
     pushName?: string,
   ) {
     if (session && session.status !== 'opened') {
@@ -640,7 +652,7 @@ export class DifyService {
       return;
     }
 
-    await this.sendMessageToBot(instance, session, settings, dify, remoteJid, pushName, content);
+    await this.sendMessageToBot(instance, session, settings, dify, remoteJid, pushName, content, fromMe, msgId);
 
     return;
   }

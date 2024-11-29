@@ -51,6 +51,8 @@ export class EvolutionBotService {
     remoteJid: string,
     pushName: string,
     content: string,
+    fromMe: boolean,
+    msgId: string,
   ) {
     const payload: any = {
       inputs: {
@@ -58,6 +60,8 @@ export class EvolutionBotService {
         remoteJid: remoteJid,
         pushName: pushName,
         instanceName: instance.instanceName,
+        fromMe: fromMe,
+        msgId: msgId,
         serverUrl: this.configService.get<HttpServer>('SERVER').URL,
         apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
       },
@@ -326,6 +330,8 @@ export class EvolutionBotService {
     session: IntegrationSession,
     settings: EvolutionBotSetting,
     content: string,
+    fromMe: boolean,
+    msgId: string,
     pushName?: string,
   ) {
     if (session && session.status !== 'opened') {
@@ -417,7 +423,7 @@ export class EvolutionBotService {
       return;
     }
 
-    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content);
+    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId);
 
     if (!message) return;
 
