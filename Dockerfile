@@ -32,7 +32,7 @@ RUN npm run build
 FROM node:20-alpine AS final
 
 RUN apk update && \
-    apk add tzdata ffmpeg bash
+    apk add --no-cache tzdata ffmpeg bash openssl libc6-compat
 
 ENV TZ=America/Sao_Paulo
 
