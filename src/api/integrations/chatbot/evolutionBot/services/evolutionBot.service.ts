@@ -53,6 +53,11 @@ export class EvolutionBotService {
     content: string,
     fromMe: boolean,
     msgId: string,
+    chatwoot?: {
+      inboxId: string | null;
+      conversationId: string | null;
+      messageId: string | null;
+    },
   ) {
     const payload: any = {
       inputs: {
@@ -62,6 +67,7 @@ export class EvolutionBotService {
         instanceName: instance.instanceName,
         fromMe: fromMe,
         msgId: msgId,
+        chatwoot,
         serverUrl: this.configService.get<HttpServer>('SERVER').URL,
         apiKey: this.configService.get<Auth>('AUTHENTICATION').API_KEY.KEY,
       },
@@ -305,6 +311,11 @@ export class EvolutionBotService {
     fromMe: boolean,
     msgId: string,
     pushName?: string,
+    chatwoot?: {
+      inboxId: string | null;
+      conversationId: string | null;
+      messageId: string | null;
+    },
   ) {
     const data = await this.createNewSession(instance, {
       remoteJid,
@@ -316,7 +327,7 @@ export class EvolutionBotService {
       session = data.session;
     }
 
-    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId);
+    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId, chatwoot);
 
     if (!message) return;
 
@@ -335,6 +346,11 @@ export class EvolutionBotService {
     fromMe: boolean,
     msgId: string,
     pushName?: string,
+    chatwoot?: {
+      inboxId: string | null;
+      conversationId: string | null;
+      messageId: string | null;
+    },
   ) {
     if (session && session.status !== 'opened') {
       return;
@@ -368,13 +384,13 @@ export class EvolutionBotService {
           });
         }
 
-        await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName);
+        await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName, chatwoot);
         return;
       }
     }
 
     if (!session) {
-      await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName);
+      await this.initNewSession(instance, remoteJid, bot, settings, session, content, fromMe, msgId, pushName, chatwoot);
       return;
     }
 
@@ -425,7 +441,7 @@ export class EvolutionBotService {
       return;
     }
 
-    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId);
+    const message = await this.sendMessageToBot(instance, session, bot, remoteJid, pushName, content, fromMe, msgId, chatwoot);
 
     if (!message) return;
 

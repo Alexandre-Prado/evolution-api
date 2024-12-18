@@ -807,6 +807,12 @@ export class EvolutionBotController extends ChatbotController implements Chatbot
         return;
       }
 
+      const chatwoot = {
+        inboxId: msg.chatwootInboxId ?? null,
+        conversationId: msg.chatwootConversationId ?? null,
+        messageId: msg.chatwootMessageId ?? null,
+      }
+
       if (debounceTime && debounceTime > 0) {
         this.processDebounce(this.userMessageDebounce, content, remoteJid, debounceTime, async (debouncedContent) => {
           await this.evolutionBotService.processBot(
@@ -832,6 +838,7 @@ export class EvolutionBotController extends ChatbotController implements Chatbot
             key.fromMe,
             key.id,
             msg?.pushName,
+            chatwoot,
           );
         });
       } else {
@@ -858,6 +865,7 @@ export class EvolutionBotController extends ChatbotController implements Chatbot
           key.fromMe,
           key.id,
           msg?.pushName,
+          chatwoot,
         );
       }
 
